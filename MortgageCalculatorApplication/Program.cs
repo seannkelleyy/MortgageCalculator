@@ -1,4 +1,4 @@
-namespace MortgageCalculator
+namespace MortgageCalculatorApplication
 {
     internal static class Program
     {
