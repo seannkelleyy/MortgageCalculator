@@ -18,6 +18,7 @@ namespace MortgageCalculatorApplication
             StringBuilder query = new StringBuilder("insert into Mortgage (PaymentNumber, BeginningBalance, " +
                 "PaymentAmount, Principal, Interest, InterestPaid, EndingBalance) values ");
 
+
             // Clears the Mortgage table in the MortgageDB.db database for each new mortgage calculation.
             SQLAccess.ClearTable();
             // Clears the rows in the mortgageAmortization dataGridView for each new mortgage calculation.
@@ -33,10 +34,12 @@ namespace MortgageCalculatorApplication
                 // This value is multiplied by 12 because the input is expected to be years
                 mortgage.LoanLength = Convert.ToInt32(lengthTextBox.Text) * 12;
 
+
                 // Calls the CalculatePaymentAmount method from thre MortgageModel class and saves return into monthlyPayment variable.
                 decimal monthlyPayment = mortgage.CalculatePaymentAmount(mortgage.LoanAmount, mortgage.InterestRate, mortgage.LoanLength);
                 // Prints monthlyPayment as a formatted string in the USD currency
                 monthlyPaymentAmountLabel.Text = monthlyPayment.ToString("C2");
+
 
                 // Loops for the length of the mortgage and adds each payment to the database.
                 int length = mortgage.LoanLength;
@@ -58,10 +61,12 @@ namespace MortgageCalculatorApplication
 
                 }
 
+
                 // Removes the ", " from the end of query.
                 query.Remove(query.Length - 2, 2);
                 // Saves query to MortgageDB.db database using the SavePayment method.
                 SQLAccess.SavePayment(query.ToString());
+
 
                 // Creates a list of PaymentModels called payments and generates values from the MortgageDB.db using the LoadPayment method.
                 List<PaymentModel> payments = SQLAccess.LoadPayment();
@@ -79,11 +84,61 @@ namespace MortgageCalculatorApplication
             }
         }
 
-        // This button resets the dataGridView as well as the SQLite database.
+        // This button resets the dataGridView, textboxes, as well as the SQLite database.
         private void resetButton_Click(object sender, EventArgs e)
         {
             SQLAccess.ClearTable();
             mortgageAmortization.Rows.Clear();
+            amountTextBox.Clear();
+            lengthTextBox.Clear();
+            rateTextBox.Clear();
+        }
+
+        // The below methods are for input validation. They only let the user enter a number or decimal 
+        // into the input textboxes. This works by checking if the char is a digit or decimal point.
+        private void amountTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void lengthTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void rateTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

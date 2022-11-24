@@ -179,6 +179,7 @@
             this.lengthTextBox.Name = "lengthTextBox";
             this.lengthTextBox.Size = new System.Drawing.Size(100, 23);
             this.lengthTextBox.TabIndex = 21;
+            this.lengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lengthTextBox_KeyPress);
             // 
             // lengthLabel
             // 
@@ -197,6 +198,7 @@
             this.rateTextBox.Name = "rateTextBox";
             this.rateTextBox.Size = new System.Drawing.Size(100, 23);
             this.rateTextBox.TabIndex = 19;
+            this.rateTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rateTextBox_KeyPress);
             // 
             // rateLabel
             // 
@@ -215,6 +217,7 @@
             this.amountTextBox.Name = "amountTextBox";
             this.amountTextBox.Size = new System.Drawing.Size(100, 23);
             this.amountTextBox.TabIndex = 17;
+            this.amountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.amountTextBox_KeyPress);
             // 
             // amountLabel
             // 
