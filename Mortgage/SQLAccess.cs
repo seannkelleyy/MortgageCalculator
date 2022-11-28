@@ -43,6 +43,8 @@ namespace Mortgage
         // This method looks for the connection string named "Default" in the app.config
         // file and returns it. 
         // This will be used for quickly pulling up the connection string from one location.
+
+        // Before running application, add the path for the database in App.config.
         private static string LoadConnectionString(string id = "Default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;

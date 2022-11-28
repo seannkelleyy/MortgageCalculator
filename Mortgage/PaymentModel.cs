@@ -14,14 +14,16 @@
 
         // This method calculates a payment using some of the properties from the MortageModel class. 
         // Returns a PaymentModel object named payment, which will be added to the MortgageDB.db database,
-        public static PaymentModel CalculatePayment(decimal balance, int length, double rate, int count, decimal interestPaid, decimal paymentAmount)
+        public static PaymentModel CalculatePayment(decimal balance, double rate, int count, decimal interestPaid, decimal paymentAmount)
         {
-            
-            PaymentModel payment = new PaymentModel();
-            payment.PaymentNumber = count;
-            payment.BeginningBalance = balance;
-            payment.PaymentAmount = paymentAmount;
-            payment.Interest = (balance * (decimal)(rate * 12)) / 12;
+
+            PaymentModel payment = new PaymentModel
+            {
+                PaymentNumber = count,
+                BeginningBalance = balance,
+                PaymentAmount = paymentAmount,
+                Interest = (balance * (decimal)(rate * 12)) / 12
+            };
             payment.Principal = paymentAmount - payment.Interest;
             payment.InterestPaid = interestPaid;
             payment.EndingBalance = payment.BeginningBalance - payment.Principal;

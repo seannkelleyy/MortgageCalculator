@@ -10,7 +10,7 @@ namespace Mortgage.UnitTests
         [TestMethod]
         public void CalculatePayment_EnterZero_ReturnsZero()
         {
-            var mortgage = new MortgageModel();
+            
         }
     }
 }

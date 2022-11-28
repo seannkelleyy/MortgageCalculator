@@ -14,13 +14,15 @@ namespace MortgageCalculatorApplication
         MortgageModel mortgage = new MortgageModel();
         private void submitButton_Click(object sender, EventArgs e)
         {
+            // Clears the PaidInterest property in the mortgage object and Mortgage table in the MortgageDB.db
+            // database for each new mortgage calculation.
+            SQLAccess.ClearTable();
+            mortgage.PaidInterest = 0;
+
             // Instantiates a StringBuilder object called query with the beginning of a SQLite insert statement.
             StringBuilder query = new StringBuilder("insert into Mortgage (PaymentNumber, BeginningBalance, " +
                 "PaymentAmount, Principal, Interest, InterestPaid, EndingBalance) values ");
 
-
-            // Clears the Mortgage table in the MortgageDB.db database for each new mortgage calculation.
-            SQLAccess.ClearTable();
             // Clears the rows in the mortgageAmortization dataGridView for each new mortgage calculation.
             mortgageAmortization.Rows.Clear();
 
@@ -31,7 +33,7 @@ namespace MortgageCalculatorApplication
                 mortgage.LoanAmount = Convert.ToDecimal(amountTextBox.Text);
                 // This is divided by 1200 because interest rate is expected as a percent and the value needs to be in months
                 mortgage.InterestRate = Convert.ToDouble(rateTextBox.Text) / 1200;
-                // This value is multiplied by 12 because the input is expected to be years
+                // This value is multiplied by 12 because the input is expected to years 
                 mortgage.LoanLength = Convert.ToInt32(lengthTextBox.Text) * 12;
 
 
@@ -47,7 +49,7 @@ namespace MortgageCalculatorApplication
                 {
                     // Creates a new payment object called new payment in each iteration and calculates the values for each payment with the 
                     // CalculatePayment method.
-                    PaymentModel newPayment = PaymentModel.CalculatePayment(mortgage.LoanAmount, mortgage.LoanLength, mortgage.InterestRate,
+                    PaymentModel newPayment = PaymentModel.CalculatePayment(mortgage.LoanAmount, mortgage.InterestRate,
                         i + 1, mortgage.PaidInterest, monthlyPayment);
 
                     // Appends the StringBuilder object query with each new payment.
@@ -61,12 +63,10 @@ namespace MortgageCalculatorApplication
 
                 }
 
-
                 // Removes the ", " from the end of query.
                 query.Remove(query.Length - 2, 2);
                 // Saves query to MortgageDB.db database using the SavePayment method.
                 SQLAccess.SavePayment(query.ToString());
-
 
                 // Creates a list of PaymentModels called payments and generates values from the MortgageDB.db using the LoadPayment method.
                 List<PaymentModel> payments = SQLAccess.LoadPayment();
@@ -82,6 +82,8 @@ namespace MortgageCalculatorApplication
 
                 monthlyPaymentAmountLabel.Text = "Please Enter Your Loan Information Above";
             }
+
+
         }
 
         // This button resets the dataGridView, textboxes, as well as the SQLite database.

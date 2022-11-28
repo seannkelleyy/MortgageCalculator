@@ -17,7 +17,7 @@
         // returns the monthly payment amount
         public decimal CalculatePaymentAmount(decimal P, double R, int N)
         {
-            return P * (decimal) (R * Math.Pow((1 + R), (double)N) / (Math.Pow((1 + R), (double)N) - 1));
+            return P * (decimal) (R * Math.Pow((1 + R), N) / (Math.Pow((1 + R), N) - 1));
         }
 
     }
