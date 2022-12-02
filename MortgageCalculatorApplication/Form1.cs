@@ -27,6 +27,7 @@ namespace MortgageCalculatorApplication
             mortgageAmortization.Rows.Clear();
 
 
+            // If statement checks that the textboxes are filled by the user.
             if (amountTextBox.Text.Length > 0 && lengthTextBox.Text.Length > 0 && rateTextBox.Text.Length > 0)
             {
                 // Adds values to the properties for the mortgage object, values come from text boxes.

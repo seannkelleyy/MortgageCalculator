@@ -49,9 +49,5 @@ namespace Mortgage
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
-
-/*        "insert into Mortgage (PaymentNumber, BeginningBalance, PaymentAmount, Principal, Interest, " +
-                    "InterestPaid, EndingBalance) values (@PaymentNumber, @BeginningBalance, @PaymentAmount, @Principal, " +
-                    "@Interest, @InterestPaid, @EndingBalance)", payment"*/
     }
 }
